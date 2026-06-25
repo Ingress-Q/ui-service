@@ -56,3 +56,11 @@ livenessProbe:
   periodSeconds: 15
   timeoutSeconds: 5
   failureThreshold: 5
+
+
+startupProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8080
+  failureThreshold: 30
+  periodSeconds: 10
