@@ -2,16 +2,21 @@
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023 AS build-env
 
 RUN dnf --setopt=install_weak_deps=False install -q -y \
-    maven java-21-amazon-corretto-headless \
+    maven \
+    java-21-amazon-corretto-headless \
+    tar \
+    gzip \
+    which \
     && dnf clean all
 
 WORKDIR /build
+
 COPY . .
 
-RUN ./mvnw clean package -DskipTests -q \
-    && cp target/*.jar app.jar
-
-
+RUN chmod +x mvnw && \
+    tar --version && \
+    ./mvnw clean package -DskipTests -q && \
+    cp target/*.jar app.jar
 # Runtime stage
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 
