@@ -63,4 +63,7 @@ startupProbe:
     path: /actuator/health
     port: 8080
   failureThreshold: 30
-  periodSeconds: 10
+  periodSeconds: 10ingress:
+  enabled: true
+  path: /
+  healthCheckPath: /actuator/health
